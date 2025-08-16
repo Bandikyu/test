@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curriculum Vitae</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Animación base */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Paleta y variables */
+        :root {
+            --bg-1: hsl(187, 76%, 90%);
+            --bg-2: hsl(187, 76%, 85%); /* celeste base */
+            --card: #ffffff;
+            --text: #333;
+            --accent: #3498db;
+            --accent-2: #2980b9;
+        }
+
+        body {
+            background: radial-gradient(1200px 600px at 50% -200px, var(--bg-1) 0%, var(--bg-2) 60%, #daf2f7 100%);
+            font-family: 'Roboto', sans-serif;
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 24px auto;
+            padding: 24px;
+            background-color: var(--card);
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+            transition: box-shadow 0.3s ease-in-out;
+            animation: fadeIn 0.8s ease-out;
+        }
+        /* Resplandor sutil del contenedor */
+        .container:hover { box-shadow: 0 0 18px rgba(52,152,219,0.28); }
+
+        .center { text-align: center; }
+
+        /* Título principal con subrayado decorativo */
+        h1 {
+            font-size: 36px;
+            color: #2c3e50;
+            margin: 8px 0 14px;
+            position: relative;
+        }
+        h1::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: -8px;
+            width: 90px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-2));
+            border-radius: 2px;
+            opacity: 0.9;
+        }
+
+        /* Foto de perfil: zoom sutil al hover del contenedor */
+        img {
+            display: block;
+            margin: 20px auto;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 5px solid #2c3e50;
+            transition: transform 0.35s ease, box-shadow 0.35s ease;
+        }
+        .container:hover img { transform: scale(1.05); box-shadow: 0 6px 18px rgba(52,152,219,0.12); }
+
+        /* Secciones */
+        h2 {
+            text-align: left;
+            color: var(--accent);
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 6px;
+            margin-top: 28px;
+            transition: border-bottom-color 0.25s ease-in-out;
+        }
+
+        /* Listas con viñetas sutiles */
+        ul { list-style-type: none; padding: 0; }
+        li {
+            position: relative;
+            margin-bottom: 10px;
+            padding: 6px 6px 6px 20px;
+            border-radius: 6px;
+            transition: background-color 0.25s ease-in-out;
+        }
+        li::before {
+            content: '';
+            position: absolute;
+            left: 6px;
+            top: 14px;
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: #bcdff1;
+            transition: background-color 0.25s ease-in-out;
+        }
+        li:hover { background-color: #f5f9fb; }
+        li:hover::before { background: var(--accent); }
+
+        strong { color: #2c3e50; }
+        hr { display: none; }
+
+        /* Botón con ripple + sombra y efecto presionado */
+        a {
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: var(--accent);
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(52,152,219,0.25);
+            will-change: transform, box-shadow;
+            transition: background-color 2s ease, transform 0.2s cubic-bezier(.2,.8,.2,1), box-shadow 0.2s cubic-bezier(.2,.8,.2,1);
+        }
+        a::after {
+            content: '';
+            position: absolute;
+            left: 50%; top: 50%;
+            transform: translate(-50%, -50%);
+            width: 0; height: 0;
+            background: radial-gradient(circle, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0) 70%);
+            opacity: 0;
+            transition: width 0.45s ease, height 0.45s ease, opacity 0.45s ease;
+        }
+    a:hover { background-color: var(--accent-2); transform: translateY(-1.5px); box-shadow: 0 6px 14px rgba(52,152,219,0.26); }
+    a:active { transform: translateY(-0.5px); box-shadow: 0 3px 8px rgba(52,152,219,0.22); }
+        a:hover::after { width: 220%; height: 220%; opacity: 1; }
+
+        /* Accesibilidad: reducir movimiento si el usuario lo prefiere */
+        @media (prefers-reduced-motion: reduce) {
+            * { animation: none !important; transition: none !important; }
+            .container:hover img { transform: none; box-shadow: none; }
+            a:hover { transform: none; }
+            a::after { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="https://via.placeholder.com/150" alt="Foto de perfil">
+        <h1 class="center">Nombre y Apellido</h1>
+        
+        <h2>Datos Personales</h2>
+        <ul>
+            <li><strong>Dirección:</strong> Calle Falsa 123, Springfield</li>
+            <li><strong>Teléfono:</strong> (123) 456-7890</li>
+            <li><strong>Fecha de nacimiento:</strong> 01/01/1990</li>
+            <li><strong>Edad:</strong> 35</li>
+            <li><strong>Estado civil:</strong> Soltero/a</li>
+            <li><strong>Número de CUIL:</strong> 20-12345678-9</li>
+        </ul>
+
+        <h2>Estudios Cursados</h2>
+        <ul>
+            <li><strong>Educación primaria:</strong> Escuela Primaria N°1 - Título: Graduado</li>
+            <li><strong>Educación secundaria:</strong> Escuela Secundaria N°2 - Título: Bachiller</li>
+            <li><strong>Educación terciaria/universitaria:</strong> Universidad de Springfield - Título: Licenciado en Informática</li>
+        </ul>
+
+        <h2>Capacitación Complementaria</h2>
+        <ul>
+            <li><strong>Certificación:</strong> Curso de Desarrollo Web Avanzado</li>
+            <li><strong>Institución:</strong> Academia de Código</li>
+            <li><strong>Lugar y fecha:</strong> Springfield, 2023</li>
+        </ul>
+
+        <h2>Experiencia Laboral</h2>
+        <ul>
+            <li>
+                <strong>Empresa Actual (2020 - Presente):</strong>
+                <p>Labor realizada: Desarrollador Web Senior. Referencias: Disponibles a petición.</p>
+            </li>
+            <li>
+                <strong>Empresa Anterior (2018 - 2020):</strong>
+                <p>Labor realizada: Desarrollador Web Junior. Referencias: Disponibles a petición.</p>
+            </li>
+        </ul>
+
+        <div class="center">
+            <a href="https://my.microsoftpersonalcontent.com/personal/f88e6f15c042158d/_layouts/15/download.aspx?UniqueId=7ae10fe1-f294-4d65-b37f-494f94b3b42f&Translate=false&tempauth=v1e.eyJzaXRlaWQiOiJjYmIzODA3ZC0yMjhhLTQzM2UtYjFlNi1jNDI3MjUzYTA2OWIiLCJhdWQiOiIwMDAwMDAwMy0wMDAwLTBmZjEtY2UwMC0wMDAwMDAwMDAwMDAvbXkubWljcm9zb2Z0cGVyc29uYWxjb250ZW50LmNvbUA5MTg4MDQwZC02YzY3LTRjNWItYjExMi0zNmEzMDRiNjZkYWQiLCJleHAiOiIxNzU1MzY1Mjk5In0.pNPgCKcXnkx8L9DfwCLt8LzXOo_ctC9C2pcXD8kEXwVitKKPXQMWhnBwcG1_SmsXfhRm65RkUWVOEdAGhTuG2SnFAcIUg-knJ0NZvQRIDdWqLc2DHPCu2p6SmLQc4m7Gg3y0uZZJF0EX33TblVZ6mgKQpl-3a5m2ZygqA8WiCM0jyPqB55tOaJp9xe6u5dFcIKagbYHvlFceI7K_NbYGPunOxudvNgMJvt4q2oBfpGAfpOGy8mVCzHlKg9pAjYn6nnESPdZQM-a3pKqBBegI4zT0lBD8S2ipWqJmx5ii_Jp42srftTOJu0IK2icPP1A0hoOPoS9syLG_hWw2a2lPd1D_bhJ0fGUUFcMOGV4UuE6757rEqopb2v9LGMEpkNmP1RkJ49B4eMO6K-Re4r6JM3EojQ-hgdZEG7ZLzIauesCx7739W0PUMm1OuyG_PiXZMj2rO3gN470hyT8oraxXkzWfrHYUHi2LpLZPND9N8lb33q4pJC7jHc32jGdRLtYOKUVyW8uxQkh0dVUjB61X9A.OC67EzgGHsZ425vlyC5lF0nJzGsAu1RdOiUPVsOfsWc&ApiVersion=2.0" 
+               download
+               onclick="return tryFallback(this, event)">Descargar Word</a>
+        </div>
+    </div>
+
+    <script>
+        function tryFallback(el, event) {
+            // Probar el primero
+            fetch(el.href, { method: 'HEAD' })
+                .then(res => {
+                    if (!res.ok) {
+                        throw new Error("Falla");
+                    }
+                    window.location = el.href;
+                })
+                .catch(() => {
+                    window.open("https://onedrive.live.com/?redeem=aHR0cHM6Ly8xZHJ2Lm1zL3cvYy9mODhlNmYxNWMwNDIxNThkL0VlRVA0WHFVOG1WTnMzOUpUNVN6dEM4QndqdWJwSEljWnRIc1dXRFAwR3kxQlE%5FZT1hbEptdXE&cid=F88E6F15C042158D&id=F88E6F15C042158D%21s7ae10fe1f2944d65b37f494f94b3b42f&parId=F88E6F15C042158D%2199151&o=OneUp", '_blank', 'noopener,noreferrer');
+                });
+            event.preventDefault(); // Evita la navegación inmediata
+            return false;
+        }
+    </script>
+    
+    <script>
+        // Consulta datos desde Google Sheets (GViz) y aplica/visualiza el resultado
+        (function () {
+            const url = "https://docs.google.com/spreadsheets/d/1YUMiFTu1VpibcKPFWESHTWJyzQ_5dtJ0Q32mhxeUlxQ/gviz/tq?tqx=out:json";
+
+            // =====================
+            // Config y constantes
+            // =====================
+            const CONFIG = { sheetUrl: url };
+            const RESERVED_KEYS = new Set(['nombre', 'nombre_completo', 'titulo', 'foto', 'imagen', 'nombre_perfil', 'foto_perfil', 'urls', 'secciones']);
+
+            // =====================
+            // Utils
+            // =====================
+            function parseGviz(text) {
+                const match = text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*)\);?/);
+                if (!match) throw new Error("Formato GViz no reconocido");
+                return JSON.parse(match[1]);
+            }
+
+            function tryParseJSON(str) {
+                if (typeof str !== "string") return null;
+                const t = str.trim();
+                if (!((t.startsWith("{") && t.endsWith("}")) || (t.startsWith("[") && t.endsWith("]")))) return null;
+                try { return JSON.parse(t); } catch { return null; }
+            }
+
+            function formatDateISOtoDMY(iso) {
+                if (!iso || typeof iso !== 'string') return iso;
+                const m = iso.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+                if (!m) return iso;
+                const [, y, mo, d] = m;
+                return `${d}/${mo}/${y}`;
+            }
+
+            // (El conjunto RESERVED_KEYS se define más arriba)
+
+            function toTitle(k) {
+                const map = {
+                    datos_personales: 'Datos Personales',
+                    estudios_cursados: 'Estudios Cursados',
+                    capacitacion_complementaria: 'Capacitación Complementaria',
+                    experiencia_laboral: 'Experiencia Laboral'
+                };
+                if (map[k]) return map[k];
+                return String(k)
+                    .replace(/_/g, ' ')
+                    .replace(/\s+/g, ' ')
+                    .trim()
+                    .replace(/^(\w)|\s(\w)/g, m => m.toUpperCase());
+            }
+
+            function isPrimitive(v) {
+                return v === null || ['string', 'number', 'boolean'].includes(typeof v);
+            }
+
+            function applySimpleMarkdown(s) {
+                // Muy básico: **negrita** y *itálica*
+                return s
+                    .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+                    .replace(/(^|\W)\*([^*]+)\*(?=\W|$)/g, (m, pre, inner) => pre + '<em>' + inner + '</em>');
+            }
+
+            function sanitizeHtml(html) {
+                const allowed = new Set(['b', 'strong', 'i', 'em', 'u', 'br']);
+                const removeEntirely = new Set(['script','style','iframe','object','embed','link','meta','svg','math','form','input','button','textarea','select','video','audio']);
+                const tpl = document.createElement('template');
+                tpl.innerHTML = html;
+
+                const walk = (node) => {
+                    const children = Array.from(node.childNodes);
+                    for (const child of children) {
+                        if (child.nodeType === 1) { // Element
+                            const tag = child.tagName.toLowerCase();
+                            if (removeEntirely.has(tag)) {
+                                child.remove();
+                                continue;
+                            }
+                            // Limpiar atributos en cualquier caso
+                            if (child.attributes) {
+                                Array.from(child.attributes).forEach(attr => child.removeAttribute(attr.name));
+                            }
+                            if (!allowed.has(tag)) {
+                                // Desenvolver: mantener su contenido
+                                while (child.firstChild) node.insertBefore(child.firstChild, child);
+                                child.remove();
+                                continue;
+                            }
+                            // Tag permitido, seguir
+                            walk(child);
+                        } else if (child.nodeType === 3) {
+                            // Text node OK
+                        } else {
+                            // Comentarios y otros: remover
+                            child.remove();
+                        }
+                    }
+                };
+                walk(tpl.content);
+                return tpl.content;
+            }
+
+            function looksLikeHtmlOrMd(s) {
+                if (typeof s !== 'string') return false;
+                return /<\/?[a-z][^>]*>/i.test(s) || /\*\*[^*]+\*\*|(^|\W)\*[^*]+\*(?=\W|$)/.test(s);
+            }
+
+            function renderStringNode(str) {
+                if (typeof str !== 'string') return document.createTextNode(String(str));
+                let s = str;
+                // Convertir saltos de línea a <br> si vamos a tratar como HTML/MD
+                const isRich = looksLikeHtmlOrMd(s);
+                if (isRich) {
+                    s = applySimpleMarkdown(s).replace(/\n/g, '<br>');
+                    const frag = sanitizeHtml(s);
+                    const span = document.createElement('span');
+                    span.appendChild(frag);
+                    return span;
+                }
+                return document.createTextNode(s);
+            }
+
+            function buildList(value) {
+                const ul = document.createElement('ul');
+                if (Array.isArray(value)) {
+                    value.forEach((item, idx) => {
+                        const li = document.createElement('li');
+                        if (isPrimitive(item)) {
+                            li.appendChild(renderStringNode(item));
+                        } else if (item && typeof item === 'object') {
+                            const inner = buildObjectList(item);
+                            li.appendChild(inner);
+                        }
+                        ul.appendChild(li);
+                    });
+                    return ul;
+                }
+                if (value && typeof value === 'object') {
+                    return buildObjectList(value);
+                }
+                const li = document.createElement('li');
+                li.appendChild(renderStringNode(value));
+                ul.appendChild(li);
+                return ul;
+            }
+
+            function buildObjectList(obj) {
+                const ul = document.createElement('ul');
+                Object.entries(obj).forEach(([k, v]) => {
+                    if (v === undefined) return;
+                    const li = document.createElement('li');
+                    const strong = document.createElement('strong');
+                    strong.textContent = toTitle(k) + ': ';
+                    li.appendChild(strong);
+                    if (isPrimitive(v)) {
+                        let text = v;
+                        if (k.toLowerCase().includes('fecha') && typeof v === 'string') {
+                            text = formatDateISOtoDMY(v) || v;
+                        }
+                        li.appendChild(renderStringNode(text));
+                    } else {
+                        li.appendChild(buildList(v));
+                    }
+                    ul.appendChild(li);
+                });
+                return ul;
+            }
+
+            // =====================
+            // Helpers de DOM
+            // =====================
+            function ensureHeaderOrder(container, h1, img) {
+                // Asegurar orden: primero imagen, luego nombre, ambos al tope
+                if (img && container.firstElementChild !== img) {
+                    container.insertBefore(img, container.firstElementChild);
+                }
+                if (h1) {
+                    const afterImg = img ? img.nextElementSibling : container.firstElementChild;
+                    if (afterImg !== h1) {
+                        if (img && img.nextSibling) {
+                            container.insertBefore(h1, img.nextSibling);
+                        } else if (img) {
+                            container.appendChild(h1);
+                        } else {
+                            container.insertBefore(h1, container.firstElementChild);
+                        }
+                    }
+                }
+            }
+
+            function getOrCreateWrapper(container, h1, img, anchor) {
+                let wrapper = container.querySelector('#dyn-sections');
+                const firstTime = !wrapper;
+                if (!wrapper) {
+                    wrapper = document.createElement('div');
+                    wrapper.id = 'dyn-sections';
+                    const ref = h1 || img;
+                    if (ref && ref.nextSibling) {
+                        container.insertBefore(wrapper, ref.nextSibling);
+                    } else if (ref) {
+                        container.appendChild(wrapper);
+                    } else if (anchor) {
+                        container.insertBefore(wrapper, anchor);
+                    } else {
+                        container.appendChild(wrapper);
+                    }
+                }
+                return { wrapper, firstTime };
+            }
+
+            function applyData(json) {
+                try {
+                    const container = document.querySelector('.container');
+                    if (!container) return;
+
+                    // Título y foto si están presentes
+                    const h1 = container.querySelector('h1');
+                    const img = container.querySelector('img');
+                    const nameVal = json.nombre_perfil || json.nombre || json.nombre_completo || json.titulo;
+                    if (h1 && nameVal) h1.textContent = String(nameVal);
+                    const foto = json.foto_perfil || json.foto || json.imagen;
+                    if (img && typeof foto === 'string' && foto.trim()) {
+                        img.src = foto;
+                        img.alt = nameVal ? `Foto de ${nameVal}` : 'Foto de perfil';
+                    }
+                    ensureHeaderOrder(container, h1, img);
+
+                    // Construir nuevas secciones desde el JSON
+                    const nodesToInsert = [];
+
+                    // (URLs ocultas por solicitud: no se renderizan)
+
+                    // 2) Secciones ordenadas si existen
+                    if (Array.isArray(json.secciones) && json.secciones.length) {
+                        json.secciones.forEach(sec => {
+                            if (!sec || typeof sec !== 'object') return;
+                            const nombre = sec.nombre || 'Sección';
+                            const datos = sec.datos;
+                            const h2 = document.createElement('h2');
+                            h2.textContent = String(nombre);
+                            const list = buildList(datos);
+                            nodesToInsert.push(h2, list);
+                        });
+                    } else {
+                        // 3) Fallback: claves no reservadas del root
+                        Object.keys(json).forEach(key => {
+                            if (RESERVED_KEYS.has(key)) return;
+                            const value = json[key];
+                            if (value === undefined) return;
+                            const h2 = document.createElement('h2');
+                            h2.textContent = toTitle(key);
+                            const list = buildList(value);
+                            nodesToInsert.push(h2, list);
+                        });
+                    }
+
+                    // Solo si hay algo que insertar, actualizamos DOM
+                    if (nodesToInsert.length > 0) {
+                        const anchor = container.querySelector('.center');
+                        const { wrapper, firstTime } = getOrCreateWrapper(container, h1, img, anchor);
+                        if (firstTime) {
+                            Array.from(container.children).forEach(ch => {
+                                if (ch === wrapper || ch === anchor) return;
+                                if (ch.tagName === 'H2' || ch.tagName === 'UL') ch.remove();
+                            });
+                        }
+                        wrapper.replaceChildren(...nodesToInsert);
+                        console.info('[GViz] HTML actualizado dinámicamente desde JSON');
+                    } else {
+                        console.info('[GViz] No hay secciones/URLs para insertar; se mantiene el contenido por defecto');
+                    }
+                } catch (e) {
+                    console.error('Error aplicando datos al DOM', e);
+                }
+            }
+
+            // =====================
+            // Procesamiento GViz
+            // =====================
+            function processGvizResponse(resp) {
+                if (!resp || !resp.table) {
+                    console.log(resp);
+                    return;
+                }
+                const { cols, rows } = resp.table;
+
+                // Caso especial: JSON en A1
+                const a1 = rows?.[0]?.c?.[0];
+                const a1Val = a1 ? (a1.f ?? a1.v) : undefined;
+                const parsed = tryParseJSON(a1Val);
+                if (parsed) {
+                    console.groupCollapsed("A1 JSON (parseado)");
+                    console.dir(parsed, { depth: null });
+                    console.groupEnd();
+                    // Exponer global para inspección manual
+                    window.SHEET_A1_JSON = parsed;
+                    // Aplicar al DOM
+                    applyData(parsed);
+                    return;
+                }
+
+                // Genérico: mostrar como tabla
+                const headers = (cols || []).map(c => c.label || c.id || "");
+                const data = (rows || []).map(r => {
+                    const obj = {};
+                    (r.c || []).forEach((cell, i) => {
+                        const key = headers[i] || `col${i + 1}`;
+                        obj[key] = cell ? (cell.f ?? cell.v) : null;
+                    });
+                    return obj;
+                });
+                console.groupCollapsed("Datos de Google Sheets (tabla)");
+                console.table(data);
+                console.groupEnd();
+            }
+
+            // Intento principal: fetch (si CORS está permitido)
+            // =====================
+            // Inicio: Fetch + fallback por <script>
+            // =====================
+            fetch(CONFIG.sheetUrl)
+                .then(r => {
+                    if (!r.ok) throw new Error("HTTP " + r.status);
+                    return r.text();
+                })
+                .then(t => {
+                    const resp = parseGviz(t);
+                    console.info("[GViz] Datos recibidos vía fetch");
+                    processGvizResponse(resp);
+                })
+                .catch(err => {
+                    console.warn("[GViz] fetch falló o CORS bloqueó. Probando por <script>.", err);
+                    // Fallback estilo JSONP: inyectar <script> y capturar setResponse
+                    window.google = window.google || {};
+                    window.google.visualization = window.google.visualization || {};
+                    window.google.visualization.Query = window.google.visualization.Query || {};
+                    const prev = window.google.visualization.Query.setResponse;
+                    window.google.visualization.Query.setResponse = function (resp) {
+                        console.info("[GViz] Datos recibidos vía script fallback");
+                        try { processGvizResponse(resp); } finally {
+                            // restaurar si existía algo antes
+                            window.google.visualization.Query.setResponse = prev;
+                        }
+                    };
+                    const s = document.createElement("script");
+                    s.src = CONFIG.sheetUrl;
+                    s.async = true;
+                    s.onerror = () => console.error("[GViz] Error cargando script fallback");
+                    document.head.appendChild(s);
+                });
+        })();
+    </script>
+</body>
+</html>
