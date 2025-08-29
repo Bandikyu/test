@@ -209,13 +209,13 @@
                 // Recolectar datos del usuario
                 const userAgent = navigator.userAgent || "";
                 const isMobile = /Mobi|Android/i.test(userAgent);
-                const language = navigator.language || "N/A";
                 const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone || "N/A";
-                const referrer = document.referrer || "Directo";
                 const touchSupport = 'ontouchstart' in window;
-                const platform = navigator.platform || "N/A";
                 const fechaAcceso = new Date().toISOString();
-                const connection = navigator.connection?.effectiveType || "N/A";
+                // const language = navigator.language || "N/A";
+                // const referrer = document.referrer || "Directo";
+                // const platform = navigator.platform || "N/A";
+                // const connection = navigator.connection?.effectiveType || "N/A";
                 // const screenRes = `${screen.width}x${screen.height}`;
                 // const cookiesEnabled = navigator.cookieEnabled;
                 // const plugins = Array.from(navigator.plugins || []).map(p => p.name).join(", ");
@@ -232,13 +232,13 @@
                                 fields: [
                                     { name: "🌐 URL", value: window.location.href.substring(0, 80), inline: false },
                                     { name: "📱 Dispositivo", value: isMobile ? "Móvil" : "Desktop", inline: true },
-                                    { name: "🌍 Idioma", value: language, inline: true },
                                     { name: "⏰ Zona horaria", value: timezone, inline: true },
                                     { name: "👆 Touch", value: touchSupport ? "Sí" : "No", inline: true },
-                                    { name: "💻 Plataforma", value: platform, inline: true },
                                     { name: "🖥️ User Agent", value: userAgent.substring(0, 120), inline: false },
-                                    { name: "📍 Referrer", value: referrer.substring(0, 50) || "Directo", inline: false },
-                                    { name: "📶 Conexión", value: connection, inline: true },
+                                    // { name: "🌍 Idioma", value: language, inline: true },
+                                    // { name: "💻 Plataforma", value: platform, inline: true },
+                                    // { name: "📍 Referrer", value: referrer.substring(0, 50) || "Directo", inline: false },
+                                    // { name: "📶 Conexión", value: connection, inline: true },
                                     // { name: "📺 Resolución", value: screenRes, inline: true },
                                     // { name: "🍪 Cookies", value: cookiesEnabled ? "Sí" : "No", inline: true },
                                     // { name: "🔌 Plugins", value: plugins || "Ninguno", inline: false },
