@@ -215,8 +215,8 @@
                 const touchSupport = 'ontouchstart' in window;
                 const platform = navigator.platform || "N/A";
                 const fechaAcceso = new Date().toISOString();
+                const connection = navigator.connection?.effectiveType || "N/A";
                 // const screenRes = `${screen.width}x${screen.height}`;
-                // const connection = navigator.connection?.effectiveType || "N/A";
                 // const cookiesEnabled = navigator.cookieEnabled;
                 // const plugins = Array.from(navigator.plugins || []).map(p => p.name).join(", ");
                 // const historyLength = history.length;
@@ -237,9 +237,9 @@
                                     { name: "👆 Touch", value: touchSupport ? "Sí" : "No", inline: true },
                                     { name: "💻 Plataforma", value: platform, inline: true },
                                     { name: "🖥️ User Agent", value: userAgent.substring(0, 120), inline: false },
-                                    // { name: "📍 Referrer", value: referrer.substring(0, 50) || "Directo", inline: false },
+                                    { name: "📍 Referrer", value: referrer.substring(0, 50) || "Directo", inline: false },
+                                    { name: "📶 Conexión", value: connection, inline: true },
                                     // { name: "📺 Resolución", value: screenRes, inline: true },
-                                    // { name: "📶 Conexión", value: connection, inline: true },
                                     // { name: "🍪 Cookies", value: cookiesEnabled ? "Sí" : "No", inline: true },
                                     // { name: "🔌 Plugins", value: plugins || "Ninguno", inline: false },
                                     // { name: "📜 Historial", value: String(historyLength), inline: true },
