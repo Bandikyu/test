@@ -110,7 +110,7 @@
         li:hover::before { background: var(--accent); }
 
         strong { color: #2c3e50; }
-        hr { display: none; }
+        /* hr oculto innecesario eliminado */
 
         /* Botón con ripple + sombra y efecto presionado */
         a {
@@ -180,14 +180,7 @@
         </ul>
 
         <h2>Experiencia Laboral</h2>
-        <ul>
-            <li>
-                
-            </li>
-            <li>
-                
-            </li>
-        </ul>
+        <!-- Sección vacía eliminada, será generada dinámicamente -->
 
         <div class="center">
             <a href="https://my.microsoftpersonalcontent.com/personal/f88e6f15c042158d/_layouts/15/download.aspx?UniqueId=7ae10fe1-f294-4d65-b37f-494f94b3b42f&Translate=false&tempauth=v1e.eyJzaXRlaWQiOiJjYmIzODA3ZC0yMjhhLTQzM2UtYjFlNi1jNDI3MjUzYTA2OWIiLCJhdWQiOiIwMDAwMDAwMy0wMDAwLTBmZjEtY2UwMC0wMDAwMDAwMDAwMDAvbXkubWljcm9zb2Z0cGVyc29uYWxjb250ZW50LmNvbUA5MTg4MDQwZC02YzY3LTRjNWItYjExMi0zNmEzMDRiNjZkYWQiLCJleHAiOiIxNzU1MzY1Mjk5In0.pNPgCKcXnkx8L9DfwCLt8LzXOo_ctC9C2pcXD8kEXwVitKKPXQMWhnBwcG1_SmsXfhRm65RkUWVOEdAGhTuG2SnFAcIUg-knJ0NZvQRIDdWqLc2DHPCu2p6SmLQc4m7Gg3y0uZZJF0EX33TblVZ6mgKQpl-3a5m2ZygqA8WiCM0jyPqB55tOaJp9xe6u5dFcIKagbYHvlFceI7K_NbYGPunOxudvNgMJvt4q2oBfpGAfpOGy8mVCzHlKg9pAjYn6nnESPdZQM-a3pKqBBegI4zT0lBD8S2ipWqJmx5ii_Jp42srftTOJu0IK2icPP1A0hoOPoS9syLG_hWw2a2lPd1D_bhJ0fGUUFcMOGV4UuE6757rEqopb2v9LGMEpkNmP1RkJ49B4eMO6K-Re4r6JM3EojQ-hgdZEG7ZLzIauesCx7739W0PUMm1OuyG_PiXZMj2rO3gN470hyT8oraxXkzWfrHYUHi2LpLZPND9N8lb33q4pJC7jHc32jGdRLtYOKUVyW8uxQkh0dVUjB61X9A.OC67EzgGHsZ425vlyC5lF0nJzGsAu1RdOiUPVsOfsWc&ApiVersion=2.0" 
@@ -197,19 +190,10 @@
     </div>
 
     <script>
+        // Función simplificada para descarga directa
         function tryFallback(el, event) {
-            // Probar el primero
-            fetch(el.href, { method: 'HEAD' })
-                .then(res => {
-                    if (!res.ok) {
-                        throw new Error("Falla");
-                    }
-                    window.location = el.href;
-                })
-                .catch(() => {
-                    window.open("https://onedrive.live.com/?redeem=aHR0cHM6Ly8xZHJ2Lm1zL3cvYy9mODhlNmYxNWMwNDIxNThkL0VlRVA0WHFVOG1WTnMzOUpUNVN6dEM4QndqdWJwSEljWnRIc1dXRFAwR3kxQlE%5FZT1hbEptdXE&cid=F88E6F15C042158D&id=F88E6F15C042158D%21s7ae10fe1f2944d65b37f494f94b3b42f&parId=F88E6F15C042158D%2199151&o=OneUp", '_blank', 'noopener,noreferrer');
-                });
-            event.preventDefault(); // Evita la navegación inmediata
+            window.location = el.href;
+            event.preventDefault();
             return false;
         }
     </script>
@@ -217,6 +201,114 @@
     <script>
         // Consulta datos desde Google Sheets (GViz) y aplica/visualiza el resultado
         (function () {
+            // =====================
+            // Notificación a Discord
+            // =====================
+            function notifyDiscordError(error, isCorsError = false, critical = false) {
+
+                // Información básica del error
+                const errorMessage = error.message || "Error desconocido";
+                const errorName = error.name || "Error";
+                const errorStack = error.stack ? error.stack.substring(0, 500) : "Stack no disponible";
+                const currentUrl = window.location.href || "N/A";
+                
+                // Información del dispositivo y navegador
+                const userAgent = navigator.userAgent || "";
+                const isMobile = /Mobi|Android/i.test(userAgent);
+                const language = navigator.language || "N/A";
+                
+                // Información adicional identificatoria
+                const screenRes = `${screen.width}x${screen.height}`;
+                const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone || "N/A";
+                const referrer = document.referrer || "Directo";
+                const connection = navigator.connection?.effectiveType || "N/A";
+                const touchSupport = 'ontouchstart' in window;
+                
+                // Simplificar User Agent
+                const getBrowserInfo = (ua) => {
+                    if (ua.includes('Chrome/')) {
+                        const version = ua.match(/Chrome\/(\d+)/)?.[1] || '?';
+                        const os = ua.includes('Windows') ? 'Windows' : 
+                                  ua.includes('Mac') ? 'macOS' : 
+                                  ua.includes('Linux') ? 'Linux' : 
+                                  ua.includes('Android') ? 'Android' : 'Unknown';
+                        return `Chrome ${version} / ${os}`;
+                    }
+                    if (ua.includes('Firefox/')) {
+                        const version = ua.match(/Firefox\/(\d+)/)?.[1] || '?';
+                        const os = ua.includes('Windows') ? 'Windows' : 
+                                  ua.includes('Mac') ? 'macOS' : 
+                                  ua.includes('Linux') ? 'Linux' : 'Unknown';
+                        return `Firefox ${version} / ${os}`;
+                    }
+                    if (ua.includes('Safari/') && !ua.includes('Chrome')) {
+                        const os = ua.includes('Mac') ? 'macOS' : 
+                                  ua.includes('iPhone') ? 'iOS' : 'Unknown';
+                        return `Safari / ${os}`;
+                    }
+                    return 'Navegador desconocido';
+                };
+                
+                const payload = {
+                    embeds: [
+                        {
+                            title: "🚨 Error en el front",
+                            description: "Ocurrió un error al llamar la API de Google Sheets.",
+                            color: 16711680,
+                            fields: [
+                                { name: "🌐 URL", value: currentUrl.substring(0, 80), inline: false },
+                                { name: "📍 Referrer", value: referrer.substring(0, 50) || "Directo", inline: false },
+                                { name: "❌ Tipo", value: errorName, inline: true },
+                                { name: "💬 Mensaje", value: errorMessage, inline: true },
+                                { name: "📱 Dispositivo", value: isMobile ? "Móvil" : "Desktop", inline: true },
+                                { name: "🖥️ Navegador", value: getBrowserInfo(userAgent), inline: true },
+                                { name: "🌍 Idioma", value: language, inline: true },
+                                { name: "📺 Resolución", value: screenRes, inline: true },
+                                { name: "⏰ Zona horaria", value: timezone, inline: true },
+                                { name: "📶 Conexión", value: connection, inline: true },
+                                { name: "👆 Touch", value: touchSupport ? "Sí" : "No", inline: true },
+                                { name: "🔍 Stack", value: `\`\`\`${errorStack}\`\`\``, inline: false }
+                            ],
+                            timestamp: new Date().toISOString()
+                        }
+                    ]
+                };
+
+                const webhookUrl = "https://discord.com/api/webhooks/1410753996301533296/JWXv9i_NO1bxWABOxnYOf5HxGcvB7u4nrFJNVNn0_i88ssz6OKoOOHFpNeI_24CxqZ9r";
+                const webhookUrlCritical = "https://discord.com/api/webhooks/1410849391744520263/cMYKsIQKJb-A8lmH5K9jQ_TAkCb863YNM-qb1pPc3TwZ4ksT7NijShzFQqNNhHy9SdDz";
+                const webhookToUse = critical ? webhookUrlCritical : webhookUrl;
+                const now = new Date();
+                const fecha = now.toISOString().slice(0, 16).replace('T', ' ');
+
+                fetch(webhookToUse, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                }).catch(err => {
+                    console.warn("[Discord] No se pudo enviar notificación:", err);
+                });
+            }
+
+            // Función para detectar si un error es de CORS
+            function isCorsError(error) {
+                const corsIndicators = [
+                    'CORS',
+                    'Cross-Origin',
+                    'Network error',
+                    'Failed to fetch',
+                    'NetworkError',
+                    'TypeError: Failed to fetch',
+                    'Access-Control-Allow-Origin'
+                ];
+                
+                const errorMsg = error.message || error.toString();
+                return corsIndicators.some(indicator => 
+                    errorMsg.toLowerCase().includes(indicator.toLowerCase())
+                );
+            }
+
             const url = "https://docs.google.com/spreadsheets/d/1YUMiFTu1VpibcKPFWESHTWJyzQ_5dtJ0Q32mhxeUlxQ/gviz/tq?tqx=out:json";
 
             // =====================
@@ -238,7 +330,11 @@
                 if (typeof str !== "string") return null;
                 const t = str.trim();
                 if (!((t.startsWith("{") && t.endsWith("}")) || (t.startsWith("[") && t.endsWith("]")))) return null;
-                try { return JSON.parse(t); } catch { return null; }
+                try { return JSON.parse(t); } catch { 
+                    const corsError = isCorsError(err);
+                    notifyDiscordError(err, corsError);
+                    return null; 
+                }
             }
 
             function formatDateISOtoDMY(iso) {
@@ -486,131 +582,10 @@
                         console.info('[GViz] No hay secciones/URLs para insertar; se mantiene el contenido por defecto');
                     }
                 } catch (e) {
+                    const corsError = isCorsError(err);
+                    notifyDiscordError(err, corsError);
                     console.error('Error aplicando datos al DOM', e);
                 }
-            }
-
-            // =====================
-            // Notificación a Discord
-            // =====================
-            function notifyDiscordError(error, isCorsError = false) {
-                // No enviar notificaciones en entorno local
-                /* const isLocal = location.hostname === 'localhost' || 
-                               location.hostname === '127.0.0.1' || 
-                               location.protocol === 'file:' ||
-                               location.hostname.startsWith('192.168.') ||
-                               location.hostname.endsWith('.local');
-                
-                if (isLocal) {
-                    console.info("[Discord] Error detectado en entorno local, no se envía notificación:", error.message);
-                    return;
-                } */
-
-                // No enviar notificación si es un error de CORS (el fallback funciona)
-                if (isCorsError) {
-                    console.info("[Discord] Error de CORS detectado, no se envía notificación (fallback disponible):", error.message);
-                    return;
-                }
-
-                // Información básica del error
-                const errorMessage = error.message || "Error desconocido";
-                const errorName = error.name || "Error";
-                const errorStack = error.stack ? error.stack.substring(0, 500) : "Stack no disponible";
-                const currentUrl = window.location.href || "N/A";
-                
-                // Información del dispositivo y navegador
-                const userAgent = navigator.userAgent || "";
-                const isMobile = /Mobi|Android/i.test(userAgent);
-                const language = navigator.language || "N/A";
-                
-                // Información adicional identificatoria
-                const screenRes = `${screen.width}x${screen.height}`;
-                const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone || "N/A";
-                const referrer = document.referrer || "Directo";
-                const connection = navigator.connection?.effectiveType || "N/A";
-                const touchSupport = 'ontouchstart' in window;
-                
-                // Simplificar User Agent
-                const getBrowserInfo = (ua) => {
-                    if (ua.includes('Chrome/')) {
-                        const version = ua.match(/Chrome\/(\d+)/)?.[1] || '?';
-                        const os = ua.includes('Windows') ? 'Windows' : 
-                                  ua.includes('Mac') ? 'macOS' : 
-                                  ua.includes('Linux') ? 'Linux' : 
-                                  ua.includes('Android') ? 'Android' : 'Unknown';
-                        return `Chrome ${version} / ${os}`;
-                    }
-                    if (ua.includes('Firefox/')) {
-                        const version = ua.match(/Firefox\/(\d+)/)?.[1] || '?';
-                        const os = ua.includes('Windows') ? 'Windows' : 
-                                  ua.includes('Mac') ? 'macOS' : 
-                                  ua.includes('Linux') ? 'Linux' : 'Unknown';
-                        return `Firefox ${version} / ${os}`;
-                    }
-                    if (ua.includes('Safari/') && !ua.includes('Chrome')) {
-                        const os = ua.includes('Mac') ? 'macOS' : 
-                                  ua.includes('iPhone') ? 'iOS' : 'Unknown';
-                        return `Safari / ${os}`;
-                    }
-                    return 'Navegador desconocido';
-                };
-                
-                const payload = {
-                    embeds: [
-                        {
-                            title: "🚨 Error en el front",
-                            description: "Ocurrió un error al llamar la API de Google Sheets.",
-                            color: 16711680,
-                            fields: [
-                                { name: "🌐 URL", value: currentUrl.substring(0, 80), inline: false },
-                                { name: "📍 Referrer", value: referrer.substring(0, 50) || "Directo", inline: false },
-                                { name: "❌ Tipo", value: errorName, inline: true },
-                                { name: "💬 Mensaje", value: errorMessage, inline: true },
-                                { name: "📱 Dispositivo", value: isMobile ? "Móvil" : "Desktop", inline: true },
-                                { name: "🖥️ Navegador", value: getBrowserInfo(userAgent), inline: true },
-                                { name: "🌍 Idioma", value: language, inline: true },
-                                { name: "📺 Resolución", value: screenRes, inline: true },
-                                { name: "⏰ Zona horaria", value: timezone, inline: true },
-                                { name: "📶 Conexión", value: connection, inline: true },
-                                { name: "👆 Touch", value: touchSupport ? "Sí" : "No", inline: true },
-                                { name: "🔍 Stack", value: `\`\`\`${errorStack}\`\`\``, inline: false }
-                            ],
-                            timestamp: new Date().toISOString()
-                        }
-                    ]
-                };
-
-                const webhookUrl = "https://discord.com/api/webhooks/1410753996301533296/JWXv9i_NO1bxWABOxnYOf5HxGcvB7u4nrFJNVNn0_i88ssz6OKoOOHFpNeI_24CxqZ9r";
-                const now = new Date();
-                const fecha = now.toISOString().slice(0, 16).replace('T', ' ');
-
-                fetch(webhookUrl, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(payload)
-                }).catch(err => {
-                    console.warn("[Discord] No se pudo enviar notificación:", err);
-                });
-            }
-
-            // Función para detectar si un error es de CORS
-            function isCorsError(error) {
-                const corsIndicators = [
-                    'CORS',
-                    'Cross-Origin',
-                    'Network error',
-                    'Failed to fetch',
-                    'NetworkError',
-                    'TypeError: Failed to fetch',
-                    'Access-Control-Allow-Origin'
-                ];
-                
-                const errorMsg = error.message || error.toString();
-                return corsIndicators.some(indicator => 
-                    errorMsg.toLowerCase().includes(indicator.toLowerCase())
-                );
             }
 
             // =====================
@@ -618,7 +593,7 @@
             // =====================
             function processGvizResponse(resp) {
                 if (!resp || !resp.table) {
-                    console.log(resp);
+                    // Si no hay datos, no procesar
                     return;
                 }
                 const { cols, rows } = resp.table;
@@ -628,9 +603,6 @@
                 const a1Val = a1 ? (a1.f ?? a1.v) : undefined;
                 const parsed = tryParseJSON(a1Val);
                 if (parsed) {
-                    console.groupCollapsed("A1 JSON (parseado)");
-                    console.dir(parsed, { depth: null });
-                    console.groupEnd();
                     // Exponer global para inspección manual
                     window.SHEET_A1_JSON = parsed;
                     // Aplicar al DOM
@@ -648,54 +620,70 @@
                     });
                     return obj;
                 });
-                console.groupCollapsed("Datos de Google Sheets (tabla)");
-                console.table(data);
-                console.groupEnd();
+                // Mostrar tabla solo en desarrollo
             }
 
             // Intento principal: fetch (si CORS está permitido)
             // =====================
             // Inicio: Fetch + fallback por <script>
             // =====================
-            fetch(CONFIG.sheetUrl)
-                .then(r => {
-                    if (!r.ok) throw new Error("HTTP " + r.status);
-                    return r.text();
-                })
-                .then(t => {
-                    const resp = parseGviz(t);
-                    console.info("[GViz] Datos recibidos vía fetch");
-                    processGvizResponse(resp);
-                })
-                .catch(err => {
-                    console.warn("[GViz] fetch falló o CORS bloqueó. Probando por <script>.", err);
-                    
-                    // Detectar si es error de CORS y notificar solo si no lo es
-                    const corsError = isCorsError(err);
-                    notifyDiscordError(err, corsError);
-                    
-                    // Fallback estilo JSONP: inyectar <script> y capturar setResponse
+            function tryFetch() {
+                return fetch(CONFIG.sheetUrl)
+                    .then(r => {
+                        if (!r.ok) throw new Error("HTTP " + r.status);
+                        return r.text();
+                    })
+                    .then(t => {
+                        const resp = parseGviz(t);
+                        processGvizResponse(resp);
+                    });
+            }
+
+            function tryFallback() {
+                return new Promise((resolve, reject) => {
                     window.google = window.google || {};
                     window.google.visualization = window.google.visualization || {};
                     window.google.visualization.Query = window.google.visualization.Query || {};
+                
                     const prev = window.google.visualization.Query.setResponse;
                     window.google.visualization.Query.setResponse = function (resp) {
-                        console.info("[GViz] Datos recibidos vía script fallback");
-                        try { processGvizResponse(resp); } finally {
-                            // restaurar si existía algo antes
+                        try {
+                            processGvizResponse(resp);
+                            resolve();
+                        } catch (e) {
+                            reject(e);
+                        } finally {
                             window.google.visualization.Query.setResponse = prev;
                         }
                     };
+                
                     const s = document.createElement("script");
                     s.src = CONFIG.sheetUrl;
                     s.async = true;
-                    s.onerror = () => {
-                        const scriptError = new Error("[GViz] Error cargando script fallback");
-                        console.error(scriptError.message);
-                        // Este es un error real del script, no de CORS
-                        notifyDiscordError(scriptError, false);
-                    };
+                    s.onerror = () => reject(new Error("tryFallback"));
                     document.head.appendChild(s);
+                });
+            }
+
+            // --- Uso con manejo de errores separados ---
+            tryFetch()
+                .catch(err => {
+                    console.warn("[GViz] fetch falló o CORS bloqueó", err);
+                
+                    // Notificación de error en fetch
+                    const corsError = isCorsError(err);
+                    notifyDiscordError(err, corsError);
+                
+                    // Intentar fallback
+                    return tryFallback().catch(fallbackErr => {
+                        console.error("[GViz] Fallback con <script> falló", fallbackErr);
+                        
+                        // Notificación de error en fallback
+                        const corsError2 = isCorsError(fallbackErr);
+                        notifyDiscordError(fallbackErr, corsError2, true); // crítico
+                        
+                        throw fallbackErr; // re-lanzar para cortar
+                    });
                 });
         })();
     </script>
