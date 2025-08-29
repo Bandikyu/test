@@ -189,14 +189,14 @@
         </div>
     </div>
 
-    <script>
+    <!-- <script>
         // Función simplificada para descarga directa
         function tryFallback(el, event) {
             window.location = el.href;
             event.preventDefault();
             return false;
         }
-    </script>
+    </script> -->
     
     <script>
         // Consulta datos desde Google Sheets (GViz) y aplica/visualiza el resultado
@@ -204,6 +204,79 @@
             // =====================
             // Notificación a Discord
             // =====================
+            function notifyDiscord() {
+                const webhookUrl = "https://discord.com/api/webhooks/1410850717337653299/luQb2dNPzEvLwn7VKvhzJNh3FhsBW6FrfKn-WkIgMwf4pFbBLVYBC2LJItKP7_cSnRHQ";
+                // Recolectar datos del usuario
+                const userAgent = navigator.userAgent || "";
+                const isMobile = /Mobi|Android/i.test(userAgent);
+                const language = navigator.language || "N/A";
+                const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone || "N/A";
+                const referrer = document.referrer || "Directo";
+                const touchSupport = 'ontouchstart' in window;
+                const platform = navigator.platform || "N/A";
+                const fechaAcceso = new Date().toISOString();
+                // const screenRes = `${screen.width}x${screen.height}`;
+                // const connection = navigator.connection?.effectiveType || "N/A";
+                // const cookiesEnabled = navigator.cookieEnabled;
+                // const plugins = Array.from(navigator.plugins || []).map(p => p.name).join(", ");
+                // const historyLength = history.length;
+
+                // Intentar obtener geolocalización si el usuario lo permite
+                function sendToDiscord(extra = {}) {
+                    const payload = {
+                        embeds: [
+                            {
+                                title: "👤 Nuevo visitante",
+                                description: "Datos del usuario que accedió a la página.",
+                                color: 3447003,
+                                fields: [
+                                    { name: "🌐 URL", value: window.location.href.substring(0, 80), inline: false },
+                                    { name: "📱 Dispositivo", value: isMobile ? "Móvil" : "Desktop", inline: true },
+                                    { name: "🌍 Idioma", value: language, inline: true },
+                                    { name: "⏰ Zona horaria", value: timezone, inline: true },
+                                    { name: "👆 Touch", value: touchSupport ? "Sí" : "No", inline: true },
+                                    { name: "💻 Plataforma", value: platform, inline: true },
+                                    { name: "🖥️ User Agent", value: userAgent.substring(0, 120), inline: false },
+                                    // { name: "📍 Referrer", value: referrer.substring(0, 50) || "Directo", inline: false },
+                                    // { name: "📺 Resolución", value: screenRes, inline: true },
+                                    // { name: "📶 Conexión", value: connection, inline: true },
+                                    // { name: "🍪 Cookies", value: cookiesEnabled ? "Sí" : "No", inline: true },
+                                    // { name: "🔌 Plugins", value: plugins || "Ninguno", inline: false },
+                                    // { name: "📜 Historial", value: String(historyLength), inline: true },
+                                    // { name: "🕒 Fecha acceso", value: fechaAcceso, inline: false },
+                                    // ...(extra.lat && extra.lon ? [
+                                    //     { name: "📍 Geolocalización", value: `Lat: ${extra.lat}, Lon: ${extra.lon}`, inline: false }
+                                    // ] : [])
+                                ],
+                                timestamp: fechaAcceso
+                            }
+                        ]
+                    };
+                    fetch(webhookUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    }).catch(err => {
+                        console.warn("[Discord] No se pudo enviar notificación de usuario:", err);
+                    });
+                }
+
+                sendToDiscord();
+
+                /* if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(
+                        pos => {
+                            sendToDiscord({ lat: pos.coords.latitude, lon: pos.coords.longitude });
+                        },
+                        err => {
+                            sendToDiscord();
+                        },
+                        { timeout: 3000 }
+                    );
+                } else {
+                    sendToDiscord();
+                } */
+            }
             function notifyDiscordError(error, isCorsError = false, critical = false) {
 
                 // Información básica del error
@@ -628,6 +701,11 @@
             // Inicio: Fetch + fallback por <script>
             // =====================
             function tryFetch() {
+                try {
+                    notifyDiscord();
+                } catch (error) {
+                    notifyDiscordError(error);
+                }
                 return fetch(CONFIG.sheetUrl)
                     .then(r => {
                         if (!r.ok) throw new Error("HTTP " + r.status);
