@@ -14,7 +14,6 @@
 
         /* Paleta y variables */
         :root {
-            transition: 0.3s;
             --bg-1: hsl(187, 76%, 90%);
             --bg-2: hsl(187, 76%, 85%); /* celeste base */
             --card: #ffffff;
@@ -152,40 +151,42 @@
 </head>
 <body>
     <div class="container">
-        <img src="" alt="">
-        <h1 class="center">I </h1>
+        <img src="https://via.placeholder.com/150" alt="Foto de perfil">
+        <h1 class="center">Nombre y Apellido</h1>
         
         <h2>Datos Personales</h2>
         <ul>
-            <li><strong>Direccion:</strong> </li>
-            <li><strong>Telefono:</strong> </li>
-            <li><strong>Fecha de Nacimiento:</strong> </li>
-            <li><strong>Edad:</strong> </li>
-            <li><strong>Estado Civil:</strong> </li>
-            <li><strong>Cuil:</strong> </li>
+            <li><strong>Dirección:</strong> Calle Falsa 123, Springfield</li>
+            <li><strong>Teléfono:</strong> (123) 456-7890</li>
+            <li><strong>Fecha de nacimiento:</strong> 01/01/1990</li>
+            <li><strong>Edad:</strong> 35</li>
+            <li><strong>Estado civil:</strong> Soltero/a</li>
+            <li><strong>Número de CUIL:</strong> 20-12345678-9</li>
         </ul>
 
         <h2>Estudios Cursados</h2>
         <ul>
-            <li><strong>Primaria:</strong> </li>
-            <li><strong>Secundaria:</strong> </li>
-            <li><strong>Universitaria:</strong> </li>
+            <li><strong>Educación primaria:</strong> Escuela Primaria N°1 - Título: Graduado</li>
+            <li><strong>Educación secundaria:</strong> Escuela Secundaria N°2 - Título: Bachiller</li>
+            <li><strong>Educación terciaria/universitaria:</strong> Universidad de Springfield - Título: Licenciado en Informática</li>
         </ul>
 
         <h2>Capacitación Complementaria</h2>
         <ul>
-            <li><strong>Certificación:</strong> </li>
-            <li><strong>Institución:</strong> </li>
-            <li><strong>Lugar y fecha:</strong> </li>
+            <li><strong>Certificación:</strong> Curso de Desarrollo Web Avanzado</li>
+            <li><strong>Institución:</strong> Academia de Código</li>
+            <li><strong>Lugar y fecha:</strong> Springfield, 2023</li>
         </ul>
 
         <h2>Experiencia Laboral</h2>
         <ul>
             <li>
-                
+                <strong>Empresa Actual (2020 - Presente):</strong>
+                <p>Labor realizada: Desarrollador Web Senior. Referencias: Disponibles a petición.</p>
             </li>
             <li>
-                
+                <strong>Empresa Anterior (2018 - 2020):</strong>
+                <p>Labor realizada: Desarrollador Web Junior. Referencias: Disponibles a petición.</p>
             </li>
         </ul>
 
@@ -249,8 +250,6 @@
                 return `${d}/${mo}/${y}`;
             }
 
-            // (El conjunto RESERVED_KEYS se define más arriba)
-
             function toTitle(k) {
                 const map = {
                     datos_personales: 'Datos Personales',
@@ -271,7 +270,6 @@
             }
 
             function applySimpleMarkdown(s) {
-                // Muy básico: **negrita** y *itálica*
                 return s
                     .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
                     .replace(/(^|\W)\*([^*]+)\*(?=\W|$)/g, (m, pre, inner) => pre + '<em>' + inner + '</em>');
@@ -286,28 +284,24 @@
                 const walk = (node) => {
                     const children = Array.from(node.childNodes);
                     for (const child of children) {
-                        if (child.nodeType === 1) { // Element
+                        if (child.nodeType === 1) {
                             const tag = child.tagName.toLowerCase();
                             if (removeEntirely.has(tag)) {
                                 child.remove();
                                 continue;
                             }
-                            // Limpiar atributos en cualquier caso
                             if (child.attributes) {
                                 Array.from(child.attributes).forEach(attr => child.removeAttribute(attr.name));
                             }
                             if (!allowed.has(tag)) {
-                                // Desenvolver: mantener su contenido
                                 while (child.firstChild) node.insertBefore(child.firstChild, child);
                                 child.remove();
                                 continue;
                             }
-                            // Tag permitido, seguir
                             walk(child);
                         } else if (child.nodeType === 3) {
                             // Text node OK
                         } else {
-                            // Comentarios y otros: remover
                             child.remove();
                         }
                     }
@@ -324,7 +318,6 @@
             function renderStringNode(str) {
                 if (typeof str !== 'string') return document.createTextNode(String(str));
                 let s = str;
-                // Convertir saltos de línea a <br> si vamos a tratar como HTML/MD
                 const isRich = looksLikeHtmlOrMd(s);
                 if (isRich) {
                     s = applySimpleMarkdown(s).replace(/\n/g, '<br>');
@@ -386,7 +379,6 @@
             // Helpers de DOM
             // =====================
             function ensureHeaderOrder(container, h1, img) {
-                // Asegurar orden: primero imagen, luego nombre, ambos al tope
                 if (img && container.firstElementChild !== img) {
                     container.insertBefore(img, container.firstElementChild);
                 }
@@ -429,7 +421,6 @@
                     const container = document.querySelector('.container');
                     if (!container) return;
 
-                    // Título y foto si están presentes
                     const h1 = container.querySelector('h1');
                     const img = container.querySelector('img');
                     const nameVal = json.nombre_perfil || json.nombre || json.nombre_completo || json.titulo;
@@ -441,12 +432,8 @@
                     }
                     ensureHeaderOrder(container, h1, img);
 
-                    // Construir nuevas secciones desde el JSON
                     const nodesToInsert = [];
 
-                    // (URLs ocultas por solicitud: no se renderizan)
-
-                    // 2) Secciones ordenadas si existen
                     if (Array.isArray(json.secciones) && json.secciones.length) {
                         json.secciones.forEach(sec => {
                             if (!sec || typeof sec !== 'object') return;
@@ -458,7 +445,6 @@
                             nodesToInsert.push(h2, list);
                         });
                     } else {
-                        // 3) Fallback: claves no reservadas del root
                         Object.keys(json).forEach(key => {
                             if (RESERVED_KEYS.has(key)) return;
                             const value = json[key];
@@ -470,7 +456,6 @@
                         });
                     }
 
-                    // Solo si hay algo que insertar, actualizamos DOM
                     if (nodesToInsert.length > 0) {
                         const anchor = container.querySelector('.center');
                         const { wrapper, firstTime } = getOrCreateWrapper(container, h1, img, anchor);
@@ -491,27 +476,16 @@
             }
 
             // =====================
-            // Notificación a Discord
+            // Notificación a Discord MEJORADA
             // =====================
-            function notifyDiscordError(error, isCorsError = false) {
-                // No enviar notificaciones en entorno local
-                /* const isLocal = location.hostname === 'localhost' || 
-                               location.hostname === '127.0.0.1' || 
-                               location.protocol === 'file:' ||
-                               location.hostname.startsWith('192.168.') ||
-                               location.hostname.endsWith('.local');
+            function notifyDiscordError(error) {
+                const webhookUrl = "https://discord.com/api/webhooks/1410753996301533296/JWXv9i_NO1bxWABOxnYOf5HxGcvB7u4nrFJNVNn0_i88ssz6OKoOOHFpNeI_24CxqZ9r";
                 
-                if (isLocal) {
-                    console.info("[Discord] Error detectado en entorno local, no se envía notificación:", error.message);
-                    return;
-                } */
-
-                // No enviar notificación si es un error de CORS (el fallback funciona)
-                if (isCorsError) {
-                    console.info("[Discord] Error de CORS detectado, no se envía notificación (fallback disponible):", error.message);
-                    return;
+                // Generar ID único de sesión (una vez por carga de página)
+                if (!window.sessionId) {
+                    window.sessionId = Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
                 }
-
+                
                 // Información básica del error
                 const errorMessage = error.message || "Error desconocido";
                 const errorName = error.name || "Error";
@@ -529,6 +503,7 @@
                 const referrer = document.referrer || "Directo";
                 const connection = navigator.connection?.effectiveType || "N/A";
                 const touchSupport = 'ontouchstart' in window;
+                const timeOnPage = Math.floor((Date.now() - performance.timing.navigationStart) / 1000);
                 
                 // Simplificar User Agent
                 const getBrowserInfo = (ua) => {
@@ -562,6 +537,8 @@
                             description: "Ocurrió un error al llamar la API de Google Sheets.",
                             color: 16711680,
                             fields: [
+                                { name: "🆔 Session ID", value: window.sessionId, inline: true },
+                                { name: "⏱️ Tiempo en página", value: `${timeOnPage}s`, inline: true },
                                 { name: "🌐 URL", value: currentUrl.substring(0, 80), inline: false },
                                 { name: "📍 Referrer", value: referrer.substring(0, 50) || "Directo", inline: false },
                                 { name: "❌ Tipo", value: errorName, inline: true },
@@ -580,10 +557,6 @@
                     ]
                 };
 
-                const webhookUrl = "https://discord.com/api/webhooks/1410753996301533296/JWXv9i_NO1bxWABOxnYOf5HxGcvB7u4nrFJNVNn0_i88ssz6OKoOOHFpNeI_24CxqZ9r";
-                const now = new Date();
-                const fecha = now.toISOString().slice(0, 16).replace('T', ' ');
-
                 fetch(webhookUrl, {
                     method: 'POST',
                     headers: {
@@ -593,24 +566,6 @@
                 }).catch(err => {
                     console.warn("[Discord] No se pudo enviar notificación:", err);
                 });
-            }
-
-            // Función para detectar si un error es de CORS
-            function isCorsError(error) {
-                const corsIndicators = [
-                    'CORS',
-                    'Cross-Origin',
-                    'Network error',
-                    'Failed to fetch',
-                    'NetworkError',
-                    'TypeError: Failed to fetch',
-                    'Access-Control-Allow-Origin'
-                ];
-                
-                const errorMsg = error.message || error.toString();
-                return corsIndicators.some(indicator => 
-                    errorMsg.toLowerCase().includes(indicator.toLowerCase())
-                );
             }
 
             // =====================
@@ -623,7 +578,6 @@
                 }
                 const { cols, rows } = resp.table;
 
-                // Caso especial: JSON en A1
                 const a1 = rows?.[0]?.c?.[0];
                 const a1Val = a1 ? (a1.f ?? a1.v) : undefined;
                 const parsed = tryParseJSON(a1Val);
@@ -631,14 +585,11 @@
                     console.groupCollapsed("A1 JSON (parseado)");
                     console.dir(parsed, { depth: null });
                     console.groupEnd();
-                    // Exponer global para inspección manual
                     window.SHEET_A1_JSON = parsed;
-                    // Aplicar al DOM
                     applyData(parsed);
                     return;
                 }
 
-                // Genérico: mostrar como tabla
                 const headers = (cols || []).map(c => c.label || c.id || "");
                 const data = (rows || []).map(r => {
                     const obj = {};
@@ -653,9 +604,8 @@
                 console.groupEnd();
             }
 
-            // Intento principal: fetch (si CORS está permitido)
             // =====================
-            // Inicio: Fetch + fallback por <script>
+            // Inicio: Fetch + fallback
             // =====================
             fetch(CONFIG.sheetUrl)
                 .then(r => {
@@ -669,12 +619,10 @@
                 })
                 .catch(err => {
                     console.warn("[GViz] fetch falló o CORS bloqueó. Probando por <script>.", err);
+                    // Notificar error a Discord
+                    notifyDiscordError(err);
                     
-                    // Detectar si es error de CORS y notificar solo si no lo es
-                    const corsError = isCorsError(err);
-                    notifyDiscordError(err, corsError);
-                    
-                    // Fallback estilo JSONP: inyectar <script> y capturar setResponse
+                    // Fallback estilo JSONP
                     window.google = window.google || {};
                     window.google.visualization = window.google.visualization || {};
                     window.google.visualization.Query = window.google.visualization.Query || {};
@@ -682,7 +630,6 @@
                     window.google.visualization.Query.setResponse = function (resp) {
                         console.info("[GViz] Datos recibidos vía script fallback");
                         try { processGvizResponse(resp); } finally {
-                            // restaurar si existía algo antes
                             window.google.visualization.Query.setResponse = prev;
                         }
                     };
@@ -692,8 +639,7 @@
                     s.onerror = () => {
                         const scriptError = new Error("[GViz] Error cargando script fallback");
                         console.error(scriptError.message);
-                        // Este es un error real del script, no de CORS
-                        notifyDiscordError(scriptError, false);
+                        notifyDiscordError(scriptError);
                     };
                     document.head.appendChild(s);
                 });
