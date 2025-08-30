@@ -1,0 +1,131 @@
+/* Animación base */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+/* Paleta y variables */
+:root {
+    transition: 0.3s;
+    --bg-1: hsl(187, 76%, 90%);
+    --bg-2: hsl(187, 76%, 85%); /* celeste base */
+    --card: #ffffff;
+    --text: #333;
+    --accent: #34db42;
+    --accent-2: #35b929;
+}
+body {
+    background: radial-gradient(1200px 600px at 50% -200px, var(--bg-1) 0%, var(--bg-2) 60%, #daf2f7 100%);
+    font-family: 'Roboto', sans-serif;
+    color: var(--text);
+    line-height: 1.6;
+}
+.container {
+    max-width: 800px;
+    margin: 24px auto;
+    padding: 24px;
+    background-color: var(--card);
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+    transition: box-shadow 0.3s ease-in-out;
+    animation: fadeIn 0.8s ease-out;
+}
+/* Resplandor sutil del contenedor */
+.container:hover { box-shadow: 0 0 18px rgba(52,152,219,0.28); }
+.center { text-align: center; }
+/* Título principal con subrayado decorativo */
+h1 {
+    font-size: 36px;
+    color: #2c3e50;
+    margin: 8px 0 14px;
+    position: relative;
+}
+h1::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -8px;
+    width: 90px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    border-radius: 2px;
+    opacity: 0.9;
+}
+/* Foto de perfil: zoom sutil al hover del contenedor */
+img {
+    display: block;
+    margin: 20px auto;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 5px solid #2c3e50;
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+.container:hover img { transform: scale(1.05); box-shadow: 0 6px 18px rgba(52,152,219,0.12); }
+/* Secciones */
+h2 {
+    text-align: left;
+    color: var(--accent);
+    border-bottom: 2px solid var(--accent);
+    padding-bottom: 6px;
+    margin-top: 28px;
+    transition: border-bottom-color 0.25s ease-in-out;
+}
+/* Listas con viñetas sutiles */
+ul { list-style-type: none; padding: 0; }
+li {
+    position: relative;
+    margin-bottom: 10px;
+    padding: 6px 6px 6px 20px;
+    border-radius: 6px;
+    transition: background-color 0.25s ease-in-out;
+}
+li::before {
+    content: '';
+    position: absolute;
+    left: 6px;
+    top: 14px;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: #bcdff1;
+    transition: background-color 0.25s ease-in-out;
+}
+li:hover { background-color: #f5f9fb; }
+li:hover::before { background: var(--accent); }
+strong { color: #2c3e50; }
+/* hr oculto innecesario eliminado */
+/* Botón con ripple + sombra y efecto presionado */
+a {
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: var(--accent);
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(52,152,219,0.25);
+    will-change: transform, box-shadow;
+    transition: background-color 2s ease, transform 0.2s cubic-bezier(.2,.8,.2,1), box-shadow 0.2s cubic-bezier(.2,.8,.2,1);
+}
+a::after {
+    content: '';
+    position: absolute;
+    left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+    width: 0; height: 0;
+    background: radial-gradient(circle, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0) 70%);
+    opacity: 0;
+    transition: width 0.45s ease, height 0.45s ease, opacity 0.45s ease;
+}
+a:hover { background-color: var(--accent-2); transform: translateY(-1.5px); box-shadow: 0 6px 14px rgba(52,152,219,0.26); }
+a:active { transform: translateY(-0.5px); box-shadow: 0 3px 8px rgba(52,152,219,0.22); }
+a:hover::after { width: 220%; height: 220%; opacity: 1; }
+/* Accesibilidad: reducir movimiento si el usuario lo prefiere */
+@media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+    .container:hover img { transform: none; box-shadow: none; }
+    a:hover { transform: none; }
+    a::after { display: none; }
+}
