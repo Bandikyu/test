@@ -10,8 +10,8 @@
     --bg-2: hsl(187, 76%, 85%); /* celeste base */
     --card: #ffffff;
     --text: #333;
-    --accent: #34db42;
-    --accent-2: #35b929;
+    --accent: #3498db;
+    --accent-2: #2980b9;
 }
 body {
     background: radial-gradient(1200px 600px at 50% -200px, var(--bg-1) 0%, var(--bg-2) 60%, #daf2f7 100%);
