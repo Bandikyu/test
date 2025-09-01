@@ -47,9 +47,9 @@ h1::after {
     bottom: -8px;
     width: 90px;
     height: 3px;
-    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    background: linear-gradient(90deg, rgba(52,152,219,0.1),var(--accent), rgba(52,152,219,0.1));
     border-radius: 2px;
-    opacity: 0.9;
+    opacity: 0;
 }
 /* Foto de perfil: zoom sutil al hover del contenedor */
 img {
@@ -66,10 +66,21 @@ img {
 h2 {
     text-align: left;
     color: var(--accent);
-    border-bottom: 2px solid var(--accent);
-    padding-bottom: 6px;
+    position: relative;
+    border: none;
+    padding-top: 18px;
     margin-top: 28px;
-    transition: border-bottom-color 0.25s ease-in-out;
+}
+h2::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 80%;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent) 70%, rgba(52,152,219,0.1) 100%);
+    border-radius: 2px;
+    opacity: 1;
 }
 /* Listas con viñetas sutiles */
 ul { list-style-type: none; padding: 0; }
